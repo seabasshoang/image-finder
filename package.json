@@ -2,6 +2,7 @@
   "name": "image-finder",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://seabasshoang.github.io/image-finder",
   "dependencies": {
     "axios": "^0.18.0",
     "material-ui": "^0.20.2",
@@ -23,5 +24,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }
