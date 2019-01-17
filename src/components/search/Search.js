@@ -15,10 +15,16 @@ state = {
 }
 
 onTextChange = e => {
-    this.setState({[e.target.name]: e.target.value}, () => {
-        axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&image_type=photo&per_page=${this.state.amount}&safesearch=true`)
-        .then(res => this.setState({ images: res.data.hits }))
-        .catch(err => console.log(err));
+    const val = e.target.value;
+    this.setState({[e.target.name]: val}, () => {
+        if(val === '') {
+            this.setState({images: []});
+        } else {
+            axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&image_type=photo&per_page=${this.state.amount}&safesearch=true`)
+            .then(res => this.setState({ images: res.data.hits }))
+            .catch(err => console.log(err));
+        }
+        
     });
 };
 
@@ -26,6 +32,18 @@ onAmountChange = (e, index, value) => this.setState({ amount: value })
 
     render () {
         console.log(this.state.images)
+
+        const styles = {
+            floatingLabelStyle: {
+                color: '#FF9800',
+              },
+              floatingLabelFocusStyle: {
+                color: '#FF9800',
+              },
+              underlineStyle: {
+                borderColor: '#FF9800',
+              },
+        }
         return (
             <div>
                 <TextField
@@ -34,13 +52,18 @@ onAmountChange = (e, index, value) => this.setState({ amount: value })
                     onChange={this.onTextChange}
                     floatingLabelText="Search For Images..."
                     fullWidth={true}
+                    style={{padding: 5}}
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    underlineFocusStyle={styles.underlineStyle}
                 />
                 <br/>
                 <SelectField
                     name="amount"
                     floatingLabelText="Amount"
                     value={this.state.amount}
-                    onChange={this.onAmountChange}>
+                    onChange={this.onAmountChange}
+                    style={{padding: 5}}>
                 <MenuItem value={5} primaryText="5" />
                 <MenuItem value={10} primaryText="10" />
                 <MenuItem value={15} primaryText="15" />
